@@ -10,12 +10,10 @@ const FindBuildsPage: NextPage = () => {
   };
 
   const builds = api.builds.getBuildsByMatchUp.useQuery({
-    matchUp: `${raceName.toLowerCase().charAt(0)}v${opponentRace
-      .toLowerCase()
-      .charAt(0)}`,
+    matchUp: `${raceName.charAt(0).toUpperCase()}v${opponentRace
+      .charAt(0)
+      .toUpperCase()}`,
   });
-
-  console.log(builds);
 
   return (
     <>
@@ -25,7 +23,28 @@ const FindBuildsPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center gap-8 text-black dark:bg-gray-800 dark:text-white">
-        {raceName} vs {opponentRace}
+        <h1>
+          {raceName} vs {opponentRace}
+        </h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Match Up</th>
+              <th>Build</th>
+            </tr>
+          </thead>
+          <tbody>
+            {builds.data?.map((build) => (
+              <tr key={build.id}>
+                <td>{build.id}</td>
+                <td>{build.matchUp}</td>
+                <td>{build.build}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </main>
     </>
   );
